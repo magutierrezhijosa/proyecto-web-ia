@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
-from routers import products
+from routers import products, auth, orders
 from seed import seed_database
 
 app = FastAPI(
@@ -21,6 +21,8 @@ app.add_middleware(
 
 # Registrar routers
 app.include_router(products.router)
+app.include_router(auth.router)
+app.include_router(orders.router)
 
 
 @app.on_event("startup")

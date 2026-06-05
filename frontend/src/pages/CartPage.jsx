@@ -1,14 +1,65 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'
+import { api } from '../services/api'
 import './CartPage.css'
 
 function CartPage() {
   const { cart, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice } = useCart()
+  const { isAuthenticated } = useAuth()
+  const navigate = useNavigate()
   const [imgErrors, setImgErrors] = useState({})
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [checkoutDone, setCheckoutDone] = useState(false)
+  const [checkoutError, setCheckoutError] = useState('')
 
   const handleImgError = (id) => {
     setImgErrors(prev => ({ ...prev, [id]: true }))
+  }
+
+  const handleCheckout = async () => {
+    if (!isAuthenticated) {
+      navigate('/login', { state: { from: '/carrito' } })
+      return
+    }
+
+    setCheckoutLoading(true)
+    setCheckoutError('')
+
+    try {
+      const items = cart.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        image_url: item.image_url || '',
+      }))
+
+      await api.createOrder(items, totalPrice)
+      setCheckoutDone(true)
+      clearCart()
+    } catch (err) {
+      setCheckoutError(err.message)
+    } finally {
+      setCheckoutLoading(false)
+    }
+  }
+
+  if (checkoutDone) {
+    return (
+      <div className="container cart-page">
+        <div className="cart-empty">
+          <span className="cart-empty__icon" style={{ fontSize: '4rem' }}>✅</span>
+          <h2>¡Compra realizada con éxito!</h2>
+          <p>Tu pedido fue registrado. Podés ver el detalle en tu perfil.</p>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/perfil" className="btn btn-primary">Ver mis compras</Link>
+            <Link to="/" className="btn btn-outline">Seguir comprando</Link>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   if (cart.length === 0) {
@@ -112,9 +163,23 @@ function CartPage() {
             </div>
           </div>
 
-          <button className="btn btn-primary cart-summary__checkout" onClick={() => alert('🚧 Checkout en construcción — pronto vas a poder finalizar la compra')}>
-            Finalizar compra
+          {checkoutError && (
+            <div className="auth-error" style={{ marginBottom: 12 }}>{checkoutError}</div>
+          )}
+
+          <button
+            className="btn btn-primary cart-summary__checkout"
+            onClick={handleCheckout}
+            disabled={checkoutLoading}
+          >
+            {checkoutLoading
+              ? 'Procesando...'
+              : isAuthenticated
+                ? 'Finalizar compra'
+                : 'Iniciar sesión para comprar'
+            }
           </button>
+
           <Link to="/" className="btn btn-outline cart-summary__continue">
             Seguir comprando
           </Link>
