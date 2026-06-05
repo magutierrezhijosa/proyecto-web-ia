@@ -1,0 +1,152 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 1000;
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 100%;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.navbar__logo-icon {
+  font-size: 1.6rem;
+}
+
+.navbar__logo-text {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.5px;
+}
+
+.navbar__logo-accent {
+  color: var(--color-primary);
+}
+
+.navbar__search {
+  flex: 1;
+  display: flex;
+  max-width: 520px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.navbar__search-input {
+  width: 100%;
+  padding: 10px 44px 10px 16px;
+  border: 2px solid var(--color-border);
+  border-radius: 50px;
+  font-size: 0.9rem;
+  background: var(--color-bg);
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.navbar__search-input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+.navbar__search-btn {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  bottom: 4px;
+  width: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.navbar__search-btn:hover {
+  background: var(--color-border);
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.navbar__link,
+.navbar__cart {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s;
+  position: relative;
+}
+
+.navbar__link:hover,
+.navbar__cart:hover {
+  background: var(--color-bg);
+}
+
+.navbar__link-icon,
+.navbar__cart-icon {
+  font-size: 1.2rem;
+}
+
+.navbar__link-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.navbar__cart-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid var(--color-surface);
+}
+
+@media (max-width: 640px) {
+  .navbar__inner {
+    gap: 12px;
+  }
+
+  .navbar__logo-text {
+    display: none;
+  }
+
+  .navbar__link-text {
+    display: none;
+  }
+
+  .navbar__search {
+    max-width: none;
+  }
+}

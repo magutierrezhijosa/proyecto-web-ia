@@ -1,0 +1,165 @@
+/* === HERO === */
+.hero {
+  background: linear-gradient(135deg, var(--color-accent) 0%, #16213e 50%, #1a1a2e 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(233, 69, 96, 0.15) 0%, transparent 60%);
+}
+
+.hero__content {
+  position: relative;
+  max-width: 700px;
+}
+
+.hero__title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+
+.hero__accent {
+  color: var(--color-primary);
+}
+
+.hero__subtitle {
+  font-size: 1.05rem;
+  opacity: 0.75;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero__btn {
+  padding: 14px 32px !important;
+  font-size: 1rem !important;
+}
+
+.hero .btn-outline {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.hero .btn-outline:hover {
+  border-color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* === SECTION TITLE === */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 20px;
+  letter-spacing: -0.3px;
+}
+
+/* === CATEGORIES === */
+.categories {
+  padding-top: 32px;
+}
+
+.categories__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.categories__chip {
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  transition: all 0.2s;
+}
+
+.categories__chip:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.categories__chip--active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.categories__chip--active:hover {
+  color: white;
+}
+
+/* === PRODUCTS === */
+.products {
+  padding-top: 8px;
+  padding-bottom: 40px;
+}
+
+.products__header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.products__count {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.products__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.products__empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-secondary);
+}
+
+.products__empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.products__empty p {
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 640px) {
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  .hero {
+    padding: 48px 0;
+  }
+
+  .products__grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+}
