@@ -59,9 +59,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   border: 1px solid var(--color-border);
   position: sticky;
   top: calc(var(--nav-height) + 24px);
+}
+
+.detail__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.detail__img:hover {
+  transform: scale(1.03);
 }
 
 .detail__image-icon {

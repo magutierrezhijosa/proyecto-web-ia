@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import './ProductCard.css'
@@ -17,12 +18,23 @@ function getCategoryIcon(category) {
 
 function ProductCard({ product }) {
   const { addToCart } = useCart()
+  const [imgError, setImgError] = useState(false)
 
   return (
     <article className="product-card fade-in">
       <Link to={`/producto/${product.id}`} className="product-card__image-wrap">
         <div className="product-card__image">
-          <span className="product-card__image-icon">{getCategoryIcon(product.category)}</span>
+          {product.image_url && !imgError ? (
+            <img
+              src={product.image_url}
+              alt={product.name}
+              className="product-card__img"
+              loading="lazy"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <span className="product-card__image-icon">{getCategoryIcon(product.category)}</span>
+          )}
         </div>
         {product.featured && <span className="product-card__badge">Destacado</span>}
       </Link>

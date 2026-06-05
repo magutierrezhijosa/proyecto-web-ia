@@ -6,6 +6,33 @@ Ejecutar: python seed.py
 from database import engine, SessionLocal, Base
 from models import Product
 
+
+def _img(photo_id):
+    """Genera URL de Unsplash para un photo ID con tamaño fijo."""
+    return f"https://images.unsplash.com/photo-{photo_id}?w=400&h=400&fit=crop&q=80"
+
+
+# Mapas de imágenes por categoría (Unsplash photo IDs verificados)
+CATEGORY_IMAGES = {
+    "Slopers": _img("1573843981267-be1999ff37cd"),
+    "Regletas": _img("1518611012118-696072aa579a"),
+    "Jugs": _img("1520250497591-112f2f40a3f4"),
+    "Pinzas": _img("1610878180933-123728745d22"),
+    "Agujeros": _img("1605540436563-5bca919ae766"),
+    "Volúmenes": _img("1564769662533-4f00a87b4056"),
+}
+
+# Imagen alternativa para variedad dentro de una misma categoría
+CATEGORY_IMAGES_ALT = {
+    "Slopers": _img("1571019613454-1cb2f99b2d8b"),
+    "Regletas": _img("1518459031867-a89b944bffe4"),
+    "Jugs": _img("1601224748193-d24f166b5c77"),
+    "Pinzas": _img("1522163182402-834f871fd851"),
+    "Agujeros": _img("1573843981267-be1999ff37cd"),
+    "Volúmenes": _img("1464822759023-fed622ff2c3b"),
+}
+
+
 # Lista de presas de escalada para testear
 PRESAS = [
     {
@@ -158,7 +185,14 @@ def seed_database():
         db.close()
         return
 
-    for presa_data in PRESAS:
+    for i, presa_data in enumerate(PRESAS):
+        cat = presa_data["category"]
+        # Alternar entre imagen principal y alternativa para variedad
+        if i % 2 == 0:
+            presa_data["image_url"] = CATEGORY_IMAGES[cat]
+        else:
+            presa_data["image_url"] = CATEGORY_IMAGES_ALT[cat]
+
         product = Product(**presa_data)
         db.add(product)
 

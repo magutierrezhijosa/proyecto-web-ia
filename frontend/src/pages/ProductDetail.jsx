@@ -19,6 +19,7 @@ function ProductDetail() {
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [added, setAdded] = useState(false)
+  const [imgError, setImgError] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -73,7 +74,16 @@ function ProductDetail() {
 
       <div className="detail__grid">
         <div className="detail__image">
-          <span className="detail__image-icon">{CATEGORY_ICONS[product.category] || '🧗'}</span>
+          {product.image_url && !imgError ? (
+            <img
+              src={product.image_url}
+              alt={product.name}
+              className="detail__img"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <span className="detail__image-icon">{CATEGORY_ICONS[product.category] || '🧗'}</span>
+          )}
         </div>
 
         <div className="detail__info">

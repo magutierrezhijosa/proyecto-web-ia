@@ -1,9 +1,15 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import './CartPage.css'
 
 function CartPage() {
   const { cart, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice } = useCart()
+  const [imgErrors, setImgErrors] = useState({})
+
+  const handleImgError = (id) => {
+    setImgErrors(prev => ({ ...prev, [id]: true }))
+  }
 
   if (cart.length === 0) {
     return (
@@ -32,7 +38,16 @@ function CartPage() {
           {cart.map((item) => (
             <div key={item.id} className="cart-item">
               <div className="cart-item__image">
-                <span>🧗</span>
+                {item.image_url && !imgErrors[item.id] ? (
+                  <img
+                    src={item.image_url}
+                    alt={item.name}
+                    className="cart-item__img"
+                    onError={() => handleImgError(item.id)}
+                  />
+                ) : (
+                  <span>🧗</span>
+                )}
               </div>
 
               <div className="cart-item__info">
